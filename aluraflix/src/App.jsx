@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import GlobalStyles from "./components/GlobalStyles";
+import Footer from "./components/Footer";
 
 const Background = styled.div`
   background-color: rgba(0, 0, 0, 0.9);
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}/>
         </Routes>
+        <Footer />
       </Background>
     </BrowserRouter>
   )
