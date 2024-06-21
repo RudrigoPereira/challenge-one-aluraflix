@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import HeaderLink from "../HeaderLink";
+import HeaderLink from "./HeaderLink";
 
 const StyledHeader = styled.header`
     height: 125px;
@@ -22,7 +22,7 @@ const StyledHeader = styled.header`
 const Header = () => {
     return(
         <StyledHeader>
-            <img src="/images/aluraflixLogo.svg" />
+            <img src="/images/aluraflixLogo.svg" alt="Logo AluraFlix"/>
             <nav>
                 <HeaderLink url="/">
                     HOME

@@ -16,7 +16,7 @@ const StyledFooter = styled.footer`
 const Footer = () => {
     return(
         <StyledFooter>
-            <img src="/images/aluraflixLogo.svg" />
+            <img src="/images/aluraflixLogo.svg" alt="Logo AluraFlix"/>
         </StyledFooter>
     )
 }
