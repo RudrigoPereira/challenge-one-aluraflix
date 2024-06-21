@@ -5,23 +5,15 @@ import Header from "./components/Header";
 import GlobalStyles from "./components/GlobalStyles";
 import Footer from "./components/Footer";
 
-const Background = styled.div`
-  background-color: rgba(0, 0, 0, 0.9);
-  width: 100%;
-  min-height: 100vh;
-`;
-
 function App() {
   return (
     <BrowserRouter>
-      <Background>
         <GlobalStyles />
-        <Header />
+        {/* <Header /> */}
         <Routes>
           <Route path="/" element={<Home />}/>
         </Routes>
-        <Footer />
-      </Background>
+        {/* <Footer /> */}
     </BrowserRouter>
   )
 }
