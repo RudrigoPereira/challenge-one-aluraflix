@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import Tmdb from "../../api/Tmdb";
-import MovieRow from "../../components/MovieRow";
-import Banner from "../../components/Banner";
-import styled from "styled-components";
-
-const StyledDiv = styled.div`
-    section{
-        margin-top: -100px;
-    }
-`;
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import Main from "../../components/Main";
 
 const Home = () => {
     const [movieList, setMovieList] = useState([]);
     const [bannerData, setBannerData] = useState(null);
+    const [blackHeader, setBlackHeader] = useState(false);
 
     useEffect(() => {
         const loadAll = async () => {
@@ -29,18 +24,27 @@ const Home = () => {
         loadAll();
     }, []);
 
-    return(
-        <StyledDiv>
-            {bannerData &&
-                <Banner item={bannerData} />
+    useEffect(() => {
+        const scrollListener = () => {
+            if(window.scrollY > 10) {
+                setBlackHeader(true);
+            } else {
+                setBlackHeader(false);
             }
-            
-            <section>
-                {movieList.map((item, key) => {
-                    return <MovieRow key={key} title={item.title} items={item.items}/>
-                })}
-            </section>
-        </StyledDiv>
+        }
+
+        window.addEventListener('scroll', scrollListener);
+        return () => {
+            window.removeEventListener('scroll', scrollListener);
+        }
+    }, []);
+
+    return(
+        <>
+            <Header black={blackHeader}/>
+            <Main bannerData={bannerData} movies={movieList}/>
+            <Footer />
+        </>
     )
 }
 
