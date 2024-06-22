@@ -23,7 +23,6 @@ const StyledDiv = styled.div`
         transform: scale(0.9);
         transition: all ease 0.2s;
     }
-
     .movieRow--item img:hover {
         transform: scale(1);
     }
