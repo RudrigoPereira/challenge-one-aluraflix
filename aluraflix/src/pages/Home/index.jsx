@@ -3,6 +3,7 @@ import Tmdb from "../../api/Tmdb";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Main from "../../components/Main";
+import Loading from "../../components/Loading";
 
 const Home = () => {
     const [movieList, setMovieList] = useState([]);
@@ -44,6 +45,9 @@ const Home = () => {
             <Header black={blackHeader}/>
             <Main bannerData={bannerData} movies={movieList}/>
             <Footer />
+            {movieList.length <= 0 &&
+                <Loading />
+            }
         </>
     )
 }

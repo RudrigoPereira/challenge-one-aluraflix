@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import MovieRowList from "./MovieRowList";
+import MovieRowButton from "./MovieRowButton";
+import { useState } from "react";
 
 const StyledDiv = styled.div`
     margin-bottom: 30px;
@@ -6,41 +11,62 @@ const StyledDiv = styled.div`
     h2 {
         margin: 0 0 0 30px;
     }
-    .movieRow--listarea {
-        overflow-x: hidden;
-        padding-left: 30px;
+    .movieRow--left{
+        left: 0;
     }
-    .movieRow--list {
-        width: 9999999999px;
+    .movieRow--rigth{
+        right: 0;
     }
-    .movieRow--item {
-        display: inline-block;
-        width: 150px;
-        cursor: pointer;
+
+    &:hover .movieRow--left,
+    &:hover .movieRow--rigth {
+        opacity: 1;
     }
-    .movieRow--item img {
-        width: 100%;
-        transform: scale(0.9);
-        transition: all ease 0.2s;
-    }
-    .movieRow--item img:hover {
-        transform: scale(1);
+
+    @media (max-width:760px) {
+        .movieRow--left,
+        .movieRow--rigth {
+            opacity: 1;
+        }
     }
 `;
 
 const MovieRow = ({ title, items }) => {
+    const [scrollX, setScrollX] = useState(0);
+
+    const handleLeftArrow = () => {
+        let x = scrollX + Math.round(window.innerWidth / 2);
+        if(x > 0) {
+            x = 0;
+        }
+        setScrollX(x);
+    }
+
+    const handleRigthArrow = () => {
+        let x = scrollX - Math.round(window.innerWidth / 2);
+        let listWidth = items.results.length * 150;
+        if((window.innerWidth - listWidth) > x) {
+            x = (window.innerWidth - listWidth) - 60;
+        }
+        setScrollX(x);
+    }
+
     return(
         <StyledDiv>
             <h2>{title}</h2>
-            <div className="movieRow--listarea">
-                <div className="movieRow--list">
-                    {items.results.length > 0 && items.results.map((item, key) => (
-                        <div key={key} className="movieRow--item">
-                            <img src={`https://image.tmdb.org/t/p/w300${item.poster_path}`} alt={item.original_title}/>
-                        </div>
-                    ))}
-                </div>
-            </div>
+
+            <MovieRowButton 
+                icon={<NavigateBeforeIcon style={{fontSize: 50}}/>}
+                classname={'movieRow--left'}
+                onClick={handleLeftArrow}
+            />
+            <MovieRowButton 
+                icon={<NavigateNextIcon style={{fontSize: 50}}/>}
+                classname={'movieRow--rigth'}
+                onClick={handleRigthArrow}
+            />
+
+            <MovieRowList items={items} scrollX={scrollX}/>
         </StyledDiv>
     )
 }

@@ -68,6 +68,29 @@ const StyledSection = styled.section`
         font-size: 18px;
         color: #999;
     }
+
+    @media (max-width:760px) {
+        .banner--horizontal{
+            padding-top: 50px;
+        }
+        .banner--name{
+            font-size: 40px;
+        }
+        .banner--info{
+            font-size: 16px;
+        }
+        .banner--description{
+            font-size: 14px;
+            max-width: 100%;
+            margin-right: 30px;
+        }
+        .banner--button a{
+            font-size: 16px;
+        }
+        .banner--genres{
+            font-size: 14px;
+        }
+    }
 `;
 
 const Banner = ({ item }) => {
@@ -78,17 +101,22 @@ const Banner = ({ item }) => {
         genres.push(item.genres[i].name);
     }
 
+    let description = item.overview;
+    if(description.length > 250) {
+        description = description.substring(0, 250)+'...';
+    }
+
     return (
         <StyledSection $item={item}>
             <div className="banner--vertical">
                 <div className="banner--horizontal">
                     <div className="banner--name">{item.name}</div>
                     <div className="banner--info">
-                        <div className="banner--points">{item.vote_average} pontos</div>
+                        <div className="banner--points">{item.vote_average.toFixed(1)} pontos</div>
                         <div className="banner--year">{firstDate.getFullYear()}</div>
                         <div className="banner--seasons">{item.number_of_seasons} temporada{item.number_of_seasons !== 1 ? 's' : ''}</div>
                     </div>
-                    <div className="banner--description">{item.overview}</div>
+                    <div className="banner--description">{description}</div>
                     <div className="banner--button"><a href="">▶︎ Assistir</a></div>
                     <div className="banner--genres"><strong>Gêneros:</strong> {genres.join(', ')}</div>
                 </div>

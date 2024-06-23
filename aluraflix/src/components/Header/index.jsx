@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import HeaderLink from "./HeaderLink";
 
 const StyledHeader = styled.header`
     position: fixed;
@@ -17,39 +16,28 @@ const StyledHeader = styled.header`
     box-shadow: 0 7px 30px ${props => props.$black ? 'rgba(34, 113, 209, 0.5)' : 'transparent'};
     transition: all ease 0.5s;
 
-    img{
+    .header-logo{
         height: 30px;
     }
-
-    /* height: 125px;
-    background-color: black;
-    border-bottom: 4px solid #2271D1;
-    box-shadow: 0 7px 30px rgba(34, 113, 209, 0.5);
-    display: flex;
-    align-items: center;
-    padding: 0 50px;
-    justify-content: space-between;
-    img {
-        max-width: 169px;
+    .header-avatar{
+        height: 50px;
+        border-radius: 5px;
     }
-    nav {
-        display: flex;
-        gap: 25px;
-    } */
+
+    @media (max-width:760px) {
+        height: 70px;
+
+        .header-avatar{
+            height: 38px;
+        }
+    }
 `;
 
 const Header = ({ black }) => {
     return(
         <StyledHeader $black={black}>
-            <img src="/images/aluraflixLogo.svg" alt="Logo AluraFlix"/>
-            {/* <nav>
-                <HeaderLink url="/">
-                    HOME
-                </HeaderLink>
-                <HeaderLink url="/novo-video">
-                    NOVO VÍDEO
-                </HeaderLink>
-            </nav> */}
+            <img src="/images/aluraflixLogo.svg" alt="Logo AluraFlix" className="header-logo"/>
+            <img src="/images/netflix-avatar.png" alt="Netflix Avatar" className="header-avatar"/>
         </StyledHeader>
     )
 }
