@@ -21,7 +21,7 @@ const StyledHeader = styled.header`
     }
     .header-avatar{
         height: 50px;
-        border-radius: 5px;
+        border-radius: 3px;
     }
 
     @media (max-width:760px) {

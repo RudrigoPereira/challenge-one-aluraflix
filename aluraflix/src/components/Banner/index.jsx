@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import styled from "styled-components";
 
 const StyledSection = styled.section`
@@ -5,51 +6,72 @@ const StyledSection = styled.section`
     background-size: cover;
     background-position: center;
     background-image: url(https://image.tmdb.org/t/p/original${props => props.$item.backdrop_path});
+`;
 
-    .banner--vertical{
-        width: inherit;
-        height: inherit;
-        background: linear-gradient(to top, #111 10%, transparent 90%);
-    }
-    .banner--horizontal{
-        width: inherit;
-        height: inherit;
-        background: linear-gradient(to right, #111 30%, transparent 70%);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding-left: 30px;
-        padding-bottom: 100px;
-        padding-top: 70px;
-    }
-    .banner--name{
+const StyledDivVertical = styled.div`
+    width: inherit;
+    height: inherit;
+    background: linear-gradient(to top, #111 10%, transparent 90%);
+`;
+
+const StyledDivHorizontal = styled.div`
+    width: inherit;
+    height: inherit;
+    background: linear-gradient(to right, #111 30%, transparent 70%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 70px 30px 100px 30px;
+
+    h1{
         font-size: 60px;
         font-weight: bold;
     }
-    .banner--info{
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 15px;
+
+    @media (max-width: 760px) {
+        padding-top: 50px;
+
+        h1{
+            font-size: 40px;
+        }
     }
-    .banner--points,
-    .banner--year,
-    .banner--seasons{
+`;
+
+const StyledDivInfo = styled.div`
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+
+    span{
         display: inline-block;
         margin-right: 15px;
     }
     .banner--points {
         color: #46D369;
     }
-    .banner--description{
-        margin-top: 15px;
-        font-size: 20px;
-        color: #999;
-        max-width: 40%;
+
+    @media (max-width: 760px) {
+        font-size: 16px;
     }
-    .banner--button{
-        margin-top: 30px;
+`;
+
+const StyledDescription = styled.p`
+    margin-top: 15px;
+    font-size: 20px;
+    color: #999;
+    max-width: 40%;
+
+    @media (max-width: 760px) {
+        font-size: 14px;
+        max-width: 100%;
+        margin-right: 30px;
     }
-    .banner--button a{
+`;
+
+const StyledDivButton = styled.div`
+    margin-top: 15px;
+
+    a{
         font-size: 20px;
         font-weight: bold;
         padding: 15px 25px;
@@ -60,69 +82,57 @@ const StyledSection = styled.section`
         opacity: 1;
         transition: all ease 0.2s;
     }
-    .banner--button a:hover{
+    a:hover{
         opacity: 0.7;
     }
-    .banner--genres{
-        margin-top: 30px;
-        font-size: 18px;
-        color: #999;
-    }
 
-    @media (max-width:760px) {
-        .banner--horizontal{
-            padding-top: 50px;
-        }
-        .banner--name{
-            font-size: 40px;
-        }
-        .banner--info{
+    @media (max-width: 760px) {
+        a{
             font-size: 16px;
-        }
-        .banner--description{
-            font-size: 14px;
-            max-width: 100%;
-            margin-right: 30px;
-        }
-        .banner--button a{
-            font-size: 16px;
-        }
-        .banner--genres{
-            font-size: 14px;
         }
     }
 `;
 
-const Banner = ({ item }) => {
-    console.log(item);
-    let firstDate = new Date(item.first_air_date);
-    let genres = [];
-    for(let i in item.genres) {
-        genres.push(item.genres[i].name);
-    }
+const StyledGenres = styled.p`
+    margin-top: 35px;
+    font-size: 18px;
+    color: #999;
 
+    @media (max-width: 760px) {
+        font-size: 14px;
+    }
+`;
+
+const Banner = memo(({ item }) => {
+    const firstDate = new Date(item.first_air_date);
+    const genres = item.genres.map(genre => genre.name).join(', ');
     let description = item.overview;
-    if(description.length > 250) {
-        description = description.substring(0, 250)+'...';
+
+    if (description.length > 250) {
+        description = `${description.substring(0, 250)}...`;
     }
 
     return (
         <StyledSection $item={item}>
-            <div className="banner--vertical">
-                <div className="banner--horizontal">
-                    <div className="banner--name">{item.name}</div>
-                    <div className="banner--info">
-                        <div className="banner--points">{item.vote_average.toFixed(1)} pontos</div>
-                        <div className="banner--year">{firstDate.getFullYear()}</div>
-                        <div className="banner--seasons">{item.number_of_seasons} temporada{item.number_of_seasons !== 1 ? 's' : ''}</div>
-                    </div>
-                    <div className="banner--description">{description}</div>
-                    <div className="banner--button"><a href="">▶︎ Assistir</a></div>
-                    <div className="banner--genres"><strong>Gêneros:</strong> {genres.join(', ')}</div>
-                </div>
-            </div>
+            <StyledDivVertical>
+                <StyledDivHorizontal>
+                    <h1>{item.name}</h1>
+                    <StyledDivInfo>
+                        <span className="banner--points">{item.vote_average.toFixed(1)} pontos</span>
+                        <span className="banner--year">{firstDate.getFullYear()}</span>
+                        <span className="banner--seasons">{item.number_of_seasons} temporada{item.number_of_seasons !== 1 ? 's' : ''}</span>
+                    </StyledDivInfo>
+                    <StyledDescription>{description}</StyledDescription>
+                    <StyledDivButton>
+                        <a href="#" aria-label={`Assistir ${item.name}`}>▶︎ Assistir</a>
+                    </StyledDivButton>
+                    <StyledGenres>
+                        <strong>Gêneros:</strong> {genres}
+                    </StyledGenres>
+                </StyledDivHorizontal>
+            </StyledDivVertical>
         </StyledSection>
-    )
-}
+    );
+});
 
 export default Banner;

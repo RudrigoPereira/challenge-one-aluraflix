@@ -35,20 +35,14 @@ const MovieRow = ({ title, items }) => {
     const [scrollX, setScrollX] = useState(0);
 
     const handleLeftArrow = () => {
-        let x = scrollX + Math.round(window.innerWidth / 2);
-        if(x > 0) {
-            x = 0;
-        }
-        setScrollX(x);
+        setScrollX(prevScrollX => Math.min(prevScrollX + Math.round(window.innerWidth / 2), 0));
     }
 
-    const handleRigthArrow = () => {
-        let x = scrollX - Math.round(window.innerWidth / 2);
-        let listWidth = items.results.length * 150;
-        if((window.innerWidth - listWidth) > x) {
-            x = (window.innerWidth - listWidth) - 60;
-        }
-        setScrollX(x);
+    const handleRightArrow = () => {
+        setScrollX(prevScrollX => {
+            const listWidth = items.results.length * 150;
+            return Math.max(prevScrollX - Math.round(window.innerWidth / 2), window.innerWidth - listWidth - 60);
+        });
     }
 
     return(
@@ -57,13 +51,13 @@ const MovieRow = ({ title, items }) => {
 
             <MovieRowButton 
                 icon={<NavigateBeforeIcon style={{fontSize: 50}}/>}
-                classname={'movieRow--left'}
+                classname='movieRow--left'
                 onClick={handleLeftArrow}
             />
             <MovieRowButton 
                 icon={<NavigateNextIcon style={{fontSize: 50}}/>}
-                classname={'movieRow--rigth'}
-                onClick={handleRigthArrow}
+                classname='movieRow--rigth'
+                onClick={handleRightArrow}
             />
 
             <MovieRowList items={items} scrollX={scrollX}/>

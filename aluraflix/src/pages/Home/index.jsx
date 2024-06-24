@@ -1,55 +1,23 @@
-import { useEffect, useState } from "react";
-import Tmdb from "../../api/Tmdb";
+import React from "react";
+import useMovieData from "../../hooks/useMovieData";
+import useScrollHeader from "../../hooks/useScrollHeader";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Main from "../../components/Main";
 import Loading from "../../components/Loading";
 
 const Home = () => {
-    const [movieList, setMovieList] = useState([]);
-    const [bannerData, setBannerData] = useState(null);
-    const [blackHeader, setBlackHeader] = useState(false);
+    const { movieList, bannerData } = useMovieData();
+    const blackHeader = useScrollHeader();
 
-    useEffect(() => {
-        const loadAll = async () => {
-            let list = await Tmdb.getHomeList();
-            setMovieList(list);
-
-            let originals = list.filter(i=>i.slug === 'originals');
-            let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
-            let chosen = originals[0].items.results[randomChosen];
-            let chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv');
-            setBannerData(chosenInfo);
-        }
-
-        loadAll();
-    }, []);
-
-    useEffect(() => {
-        const scrollListener = () => {
-            if(window.scrollY > 10) {
-                setBlackHeader(true);
-            } else {
-                setBlackHeader(false);
-            }
-        }
-
-        window.addEventListener('scroll', scrollListener);
-        return () => {
-            window.removeEventListener('scroll', scrollListener);
-        }
-    }, []);
-
-    return(
+    return (
         <>
-            <Header black={blackHeader}/>
-            <Main bannerData={bannerData} movies={movieList}/>
+            <Header black={blackHeader} />
+            <Main bannerData={bannerData} movies={movieList} />
             <Footer />
-            {movieList.length <= 0 &&
-                <Loading />
-            }
+            {movieList.length <= 0 && <Loading />}
         </>
-    )
-}
+    );
+};
 
 export default Home;
