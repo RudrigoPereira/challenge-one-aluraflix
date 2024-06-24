@@ -136,5 +136,13 @@ export default {
         }
 
         return info;
+    },
+    getMovieTrailer: async (movieId) => {
+        const trailer = await basicFetch(`/movie/${movieId}/videos?api_key=${API_KEY}&${LANGUAGE}`);
+        return trailer.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+    },
+    getTvTrailer: async (tvId) => {
+        const trailer = await basicFetch(`/tv/${tvId}/videos?api_key=${API_KEY}&${LANGUAGE}`);
+        return trailer.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
     }
 }

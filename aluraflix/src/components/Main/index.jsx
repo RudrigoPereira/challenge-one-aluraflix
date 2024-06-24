@@ -16,7 +16,8 @@ const Main = ({ bannerData, movies }) => {
             }
             <section>
                 {movies.map((item, key) => {
-                    return <MovieRow key={key} title={item.title} items={item.items}/>
+                    const isTvShow = item.slug === 'originals';
+                    return <MovieRow key={key} title={item.title} items={item.items} isTvShow={isTvShow}/>
                 })}
             </section>
         </StyledMain>

@@ -31,7 +31,7 @@ const StyledDiv = styled.div`
     }
 `;
 
-const MovieRow = ({ title, items }) => {
+const MovieRow = ({ title, items, isTvShow }) => {
     const [scrollX, setScrollX] = useState(0);
 
     const handleLeftArrow = () => {
@@ -60,7 +60,7 @@ const MovieRow = ({ title, items }) => {
                 onClick={handleRightArrow}
             />
 
-            <MovieRowList items={items} scrollX={scrollX}/>
+            <MovieRowList items={items} scrollX={scrollX} isTvShow={isTvShow}/>
         </StyledDiv>
     )
 }

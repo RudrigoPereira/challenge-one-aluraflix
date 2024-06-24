@@ -1,4 +1,7 @@
 import styled from "styled-components"
+import Tmdb from "../../../api/Tmdb";
+import Modal from "../../ModalTrailer";
+import { useState } from "react";
 
 const StyledDiv = styled.div`
     overflow-x: hidden;
@@ -27,7 +30,23 @@ const StyledDivList = styled.div`
     }
 `;
 
-const MovieRowList = ({ items, scrollX }) => {
+const MovieRowList = ({ items, scrollX, isTvShow }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [trailerKey, setTrailerKey] = useState(null);
+
+    const handleClick = async (itemId) => {
+        const trailer = isTvShow ? await Tmdb.getTvTrailer(itemId) : await Tmdb.getMovieTrailer(itemId);
+        if (trailer) {
+            setTrailerKey(trailer.key);
+            setShowModal(true);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setTrailerKey(null);
+    };
+
     return(
         <StyledDiv>
             <StyledDivList 
@@ -35,11 +54,12 @@ const MovieRowList = ({ items, scrollX }) => {
                 $scrollX={scrollX}
             >
                 {items.results.length > 0 && items.results.map((item, key) => (
-                    <div key={key}>
+                    <div key={key} onClick={() => handleClick(item.id)}>
                         <img src={`https://image.tmdb.org/t/p/w300${item.poster_path}`} alt={item.original_title}/>
                     </div>
                 ))}
             </StyledDivList>
+            <Modal show={showModal} onClose={handleCloseModal} videoKey={trailerKey} />
         </StyledDiv>
     )
 }
