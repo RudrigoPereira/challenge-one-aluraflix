@@ -12,12 +12,23 @@ const StyledModal = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.9);
+
+  @media (max-height: 550px) {
+    z-index: 1000;
+  }
 `;
 
 const ModalContent = styled.div`
   position: relative;
   width: 80%;
   max-width: 800px;
+
+  h2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+  }
 `;
 
 const CloseButton = styled.span`
@@ -28,6 +39,7 @@ const CloseButton = styled.span`
   font-size: 35px;
   font-weight: bold;
   cursor: pointer;
+  z-index: 1000;
 `;
 
 const ModalTrailer = ({ show, onClose, videoKey }) => {
@@ -46,7 +58,7 @@ const ModalTrailer = ({ show, onClose, videoKey }) => {
             title="Trailer"
           ></iframe>
         ) : (
-          <p>Loading...</p>
+          <h2>Trailer não encontrado.</h2>
         )}
       </ModalContent>
     </StyledModal>

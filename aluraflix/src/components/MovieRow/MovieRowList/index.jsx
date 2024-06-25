@@ -34,13 +34,17 @@ const MovieRowList = ({ items, scrollX, isTvShow }) => {
     const [showModal, setShowModal] = useState(false);
     const [trailerKey, setTrailerKey] = useState(null);
 
-    const handleClick = async (itemId) => {
-        const trailer = isTvShow ? await Tmdb.getTvTrailer(itemId) : await Tmdb.getMovieTrailer(itemId);
+    const handleClick = async (item) => {
+        const type = isTvShow || item.media_type === 'tv' ? 'tv' : 'movie';
+        const trailer = await Tmdb.getTrailer(item.id, type);
+
         if (trailer) {
             setTrailerKey(trailer.key);
-            setShowModal(true);
+        } else {
+            setTrailerKey(null);
         }
-    };
+        setShowModal(true);
+    }
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -54,7 +58,7 @@ const MovieRowList = ({ items, scrollX, isTvShow }) => {
                 $scrollX={scrollX}
             >
                 {items.results.length > 0 && items.results.map((item, key) => (
-                    <div key={key} onClick={() => handleClick(item.id)}>
+                    <div key={key} onClick={() => handleClick(item)}>
                         <img src={`https://image.tmdb.org/t/p/w300${item.poster_path}`} alt={item.original_title}/>
                     </div>
                 ))}

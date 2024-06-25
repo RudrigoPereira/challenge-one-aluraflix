@@ -119,30 +119,19 @@ export default {
         ]
     },
     getMovieInfo: async (movieId, type) => {
-        let info = {}
-
-        if(movieId) {
-            switch(type) {
-                case 'movie':
-                    info = await basicFetch(`/movie/${movieId}?api_key=${API_KEY}&${LANGUAGE}`);
-                    break;
-                case 'tv':
-                    info = await basicFetch(`/tv/${movieId}?api_key=${API_KEY}&${LANGUAGE}`);
-                    break;
-                default:
-                    info = null;
-                    break;
-            }
-        }
-
+        const info = await basicFetch(`/${type}/${movieId}?api_key=${API_KEY}&${LANGUAGE}`);
         return info;
     },
-    getMovieTrailer: async (movieId) => {
-        const trailer = await basicFetch(`/movie/${movieId}/videos?api_key=${API_KEY}&${LANGUAGE}`);
-        return trailer.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
-    },
-    getTvTrailer: async (tvId) => {
-        const trailer = await basicFetch(`/tv/${tvId}/videos?api_key=${API_KEY}&${LANGUAGE}`);
-        return trailer.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+    getTrailer: async (movieId, type) => {
+        let trailer = await basicFetch(`/${type}/${movieId}/videos?api_key=${API_KEY}&${LANGUAGE}`);
+        let foundTrailer = trailer.results.find(video => video.type === 'Trailer' && video.site === 'YouTube' && video.iso_639_1 === 'pt');
+    
+        if (!foundTrailer) {
+            trailer = await basicFetch(`/${type}/${movieId}/videos?api_key=${API_KEY}&language=en-US`);
+            foundTrailer = trailer.results.find(video => video.type === 'Trailer' && video.site === 'YouTube' && video.iso_639_1 === 'en');
+        }
+    
+        return foundTrailer;
     }
+    
 }
