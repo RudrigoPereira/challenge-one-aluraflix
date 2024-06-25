@@ -1,5 +1,7 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import styled from "styled-components";
+import Modal from "../ModalTrailer";
+import Tmdb from "../../api/Tmdb";
 
 const StyledSection = styled.section`
     height: 100vh;
@@ -69,32 +71,32 @@ const StyledDescription = styled.p`
 `;
 
 const StyledDivButton = styled.div`
-    margin-top: 15px;
 
-    a{
+    .watch-button {
+        display: inline-block;
         font-size: 20px;
         font-weight: bold;
         padding: 15px 25px;
         border-radius: 5px;
-        text-decoration: none;
         background-color: #FFF;
         color: #000;
         opacity: 1;
         transition: all ease 0.2s;
+        cursor: pointer;
     }
-    a:hover{
+    .watch-button:hover {
         opacity: 0.7;
     }
 
     @media (max-width: 760px) {
-        a{
+        .watch-button {
             font-size: 16px;
         }
     }
 `;
 
 const StyledGenres = styled.p`
-    margin-top: 35px;
+    margin-top: 20px;
     font-size: 18px;
     color: #999;
 
@@ -104,6 +106,9 @@ const StyledGenres = styled.p`
 `;
 
 const Banner = memo(({ item }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [trailerKey, setTrailerKey] = useState(null);
+
     const firstDate = new Date(item.first_air_date);
     const genres = item.genres.map(genre => genre.name).join(', ');
     let description = item.overview;
@@ -111,6 +116,22 @@ const Banner = memo(({ item }) => {
     if (description.length > 250) {
         description = `${description.substring(0, 250)}...`;
     }
+
+    const handleClick = async (item) => {
+        const trailer = await Tmdb.getTrailer(item.id, 'tv');
+
+        if (trailer) {
+            setTrailerKey(trailer.key);
+        } else {
+            setTrailerKey(null);
+        }
+        setShowModal(true);
+    }
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setTrailerKey(null);
+    };
 
     return (
         <StyledSection $item={item}>
@@ -124,13 +145,14 @@ const Banner = memo(({ item }) => {
                     </StyledDivInfo>
                     <StyledDescription>{description}</StyledDescription>
                     <StyledDivButton>
-                        <a href="#" aria-label={`Assistir ${item.name}`}>▶︎ Assistir</a>
+                        <div className="watch-button" onClick={() => handleClick(item)}>▶︎ Assistir</div>
                     </StyledDivButton>
                     <StyledGenres>
                         <strong>Gêneros:</strong> {genres}
                     </StyledGenres>
                 </StyledDivHorizontal>
             </StyledDivVertical>
+            <Modal show={showModal} onClose={handleCloseModal} videoKey={trailerKey} />
         </StyledSection>
     );
 });
