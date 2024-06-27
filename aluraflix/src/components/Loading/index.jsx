@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledDiv = styled.div`
+const StyledLoading = styled.div`
     position: fixed;
     top: 0;
     right: 0;
@@ -11,6 +11,7 @@ const StyledDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    
     img{
         width: 750px;
     }
@@ -18,9 +19,9 @@ const StyledDiv = styled.div`
 
 const Loading = () => {
     return(
-        <StyledDiv>
+        <StyledLoading>
             <img src="https://media.filmelier.com/noticias/br/2020/03/Netflix_LoadTime.gif" alt="Carregando"/>
-        </StyledDiv>
+        </StyledLoading>
     )
 }
 

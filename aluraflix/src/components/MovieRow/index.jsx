@@ -5,7 +5,7 @@ import MovieRowList from "./MovieRowList";
 import MovieRowButton from "./MovieRowButton";
 import { useState } from "react";
 
-const StyledDiv = styled.div`
+const StyledMovieRow = styled.div`
     margin-bottom: 30px;
 
     h2 {
@@ -46,7 +46,7 @@ const MovieRow = ({ title, items, isTvShow }) => {
     }
 
     return(
-        <StyledDiv>
+        <StyledMovieRow>
             <h2>{title}</h2>
 
             <MovieRowButton 
@@ -61,7 +61,7 @@ const MovieRow = ({ title, items, isTvShow }) => {
             />
 
             <MovieRowList items={items} scrollX={scrollX} isTvShow={isTvShow}/>
-        </StyledDiv>
+        </StyledMovieRow>
     )
 }
 

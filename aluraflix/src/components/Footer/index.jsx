@@ -30,11 +30,12 @@ const StyledFooter = styled.footer`
         }
     }
 `;
+
 const Footer = () => {
     return(
         <StyledFooter>
             <img src="/images/aluraflixLogo.svg" alt="Logo AluraFlix"/>
-            <div>Feito por Rodrigo Ferreira Pereira</div>
+            <div>Feito por <a href="https://www.linkedin.com/in/rodrigoferreirapereira/" target="_blank">Rodrigo Ferreira Pereira</a></div>
             <div>Dados pegos do site <a href="https://www.themoviedb.org">themoviedb.org</a></div>
         </StyledFooter>
     )
