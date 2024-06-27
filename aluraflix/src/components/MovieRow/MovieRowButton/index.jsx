@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledDiv = styled.div`
+const StyledRowButton = styled.div`
     position: absolute;
     width: 40px;
     height: 225px;
@@ -17,9 +17,9 @@ const StyledDiv = styled.div`
 
 const MovieRowButton = ({ icon, classname, onClick }) => {
     return(
-        <StyledDiv className={classname} onClick={onClick}>
+        <StyledRowButton className={classname} onClick={onClick}>
             {icon}
-        </StyledDiv>
+        </StyledRowButton>
     )
 }
 

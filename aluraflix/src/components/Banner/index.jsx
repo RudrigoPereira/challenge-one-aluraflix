@@ -39,7 +39,7 @@ const StyledDivHorizontal = styled.div`
     }
 `;
 
-const StyledDivInfo = styled.div`
+const StyledInfo = styled.div`
     font-size: 18px;
     font-weight: bold;
     margin-top: 15px;
@@ -70,7 +70,7 @@ const StyledDescription = styled.p`
     }
 `;
 
-const StyledDivButton = styled.div`
+const StyledButton = styled.div`
 
     .watch-button {
         display: inline-block;
@@ -138,15 +138,15 @@ const Banner = memo(({ item }) => {
             <StyledDivVertical>
                 <StyledDivHorizontal>
                     <h1>{item.name}</h1>
-                    <StyledDivInfo>
+                    <StyledInfo>
                         <span className="banner--points">{item.vote_average.toFixed(1)} pontos</span>
                         <span className="banner--year">{firstDate.getFullYear()}</span>
                         <span className="banner--seasons">{item.number_of_seasons} temporada{item.number_of_seasons !== 1 ? 's' : ''}</span>
-                    </StyledDivInfo>
+                    </StyledInfo>
                     <StyledDescription>{description}</StyledDescription>
-                    <StyledDivButton>
+                    <StyledButton>
                         <div className="watch-button" onClick={() => handleClick(item)}>▶︎ Assistir</div>
-                    </StyledDivButton>
+                    </StyledButton>
                     <StyledGenres>
                         <strong>Gêneros:</strong> {genres}
                     </StyledGenres>

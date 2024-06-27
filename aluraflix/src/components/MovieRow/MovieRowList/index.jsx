@@ -3,12 +3,12 @@ import Tmdb from "../../../api/Tmdb";
 import Modal from "../../ModalTrailer";
 import { useState } from "react";
 
-const StyledDiv = styled.div`
+const StyledRowList = styled.div`
     overflow-x: hidden;
     padding-left: 30px;
 `;
 
-const StyledDivList = styled.div`
+const StyledList = styled.div`
     width: ${props => props.$listWidth}px;
     margin-left: ${props => props.$scrollX}px;
     transition: all ease 0.5s;
@@ -52,8 +52,8 @@ const MovieRowList = ({ items, scrollX, isTvShow }) => {
     };
 
     return(
-        <StyledDiv>
-            <StyledDivList 
+        <StyledRowList>
+            <StyledList 
                 $listWidth={items.results.length * 150}
                 $scrollX={scrollX}
             >
@@ -62,9 +62,9 @@ const MovieRowList = ({ items, scrollX, isTvShow }) => {
                         <img src={`https://image.tmdb.org/t/p/w300${item.poster_path}`} alt={item.original_title}/>
                     </div>
                 ))}
-            </StyledDivList>
+            </StyledList>
             <Modal show={showModal} onClose={handleCloseModal} videoKey={trailerKey} />
-        </StyledDiv>
+        </StyledRowList>
     )
 }
 
