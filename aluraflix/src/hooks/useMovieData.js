@@ -4,12 +4,16 @@ import Tmdb from "../api/Tmdb";
 const useMovieData = () => {
     const [movieList, setMovieList] = useState([]);
     const [bannerData, setBannerData] = useState(null);
+    const [movieNotFound, setMovieNotFound] = useState(null);
 
     useEffect(() => {
         const loadAll = async () => {
             try {
                 let list = await Tmdb.getHomeList();
                 setMovieList(list);
+
+                let notFound = await Tmdb.getMovieInfo('1259453', 'movie');
+                setMovieNotFound(notFound);
 
                 let originals = list.find(i => i.slug === 'originals');
                 if (originals && originals.items.results.length > 0) {
