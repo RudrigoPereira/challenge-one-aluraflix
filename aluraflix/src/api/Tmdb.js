@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api'; // Ajuste a URL conforme necessário
+const API_BASE_URL = import.meta.env.VITE_API_URL; // Ajuste a URL conforme necessário
 
 export default {
     getHomeList: async () => {
