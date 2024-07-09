@@ -36,7 +36,7 @@ const Footer = () => {
         <StyledFooter>
             <img src="/images/aluraflixLogo.svg" alt="Logo AluraFlix"/>
             <div>Feito por <a href="https://www.linkedin.com/in/rodrigoferreirapereira/" target="_blank">Rodrigo Ferreira Pereira</a></div>
-            <div>Dados pegos do site <a href="https://www.themoviedb.org">themoviedb.org</a></div>
+            <div>Dados pegos do site <a href="https://www.themoviedb.org" target="_blank">themoviedb.org</a></div>
         </StyledFooter>
     )
 }
